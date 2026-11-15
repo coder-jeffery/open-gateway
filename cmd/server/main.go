@@ -2,17 +2,17 @@ package main
 
 import (
 	"context"
+	"example.com/open-gateway/internal/app"
+	"example.com/open-gateway/internal/config"
+	httpx "example.com/open-gateway/internal/delivery/http"
 	"flag"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
-
-	"example.com/open-gateway/internal/app"
-	"example.com/open-gateway/internal/config"
-	httpx "example.com/open-gateway/internal/delivery/http"
 )
 
 func main() {
@@ -35,10 +35,11 @@ func main() {
 	}
 
 	go func() {
-		application.Logger.Info("listening", "addr", cfg.Server.Addr)
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("server: %v", err)
-		}
+		http.ListenAndServe("127.0.0.1:6060", nil)
+		//application.Logger.Info("listening", "addr", cfg.Server.Addr)
+		//if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		//	log.Fatalf("server: %v", err)
+		//}
 	}()
 
 	stop := make(chan os.Signal, 1)
