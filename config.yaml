@@ -1,0 +1,8 @@
+server:
+  addr: ":8080"
+  read_header_timeout: 5s
+  idle_timeout: 60s
+log:
+  level: info
+redis:
+  addr: "127.0.0.1:6379"
